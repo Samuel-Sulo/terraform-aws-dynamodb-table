@@ -22,7 +22,6 @@ resource "aws_dynamodb_table" "this" {
     kms_key_arn = var.server_side_encryption_kms_key_arn
   }
 
-
   point_in_time_recovery {
     enabled = var.point_in_time_recovery_enabled
   }
@@ -33,6 +32,31 @@ resource "aws_dynamodb_table" "this" {
     content {
       name = attribute.key
       type = attribute.value
+    }
+  }
+
+  dynamic "local_secondary_index" {
+    for_each = var.local_secondary_indexes
+
+    content {
+      name               = local_secondary_index.value.name
+      range_key          = local_secondary_index.value.range_key
+      projection_type    = local_secondary_index.value.projection_type
+      non_key_attributes = lookup(local_secondary_index.value, "non_key_attributes", null)
+    }
+  }
+
+  dynamic "global_secondary_index" {
+    for_each = var.global_secondary_indexes
+
+    content {
+      name               = global_secondary_index.value.name
+      hash_key           = global_secondary_index.value.hash_key
+      projection_type    = global_secondary_index.value.projection_type
+      range_key          = lookup(global_secondary_index.value, "range_key", null)
+      non_key_attributes = lookup(global_secondary_index.value, "non_key_attributes", null)
+      read_capacity      = lookup(global_secondary_index.value, "read_capacity", null)
+      write_capacity     = lookup(global_secondary_index.value, "write_capacity", null)
     }
   }
 
@@ -48,12 +72,4 @@ resource "aws_dynamodb_table" "this" {
   }
 
   tags = merge(var.tags, { Name = var.name })
-
-  # global_secondary_index {
-
-  # }
-
-  # local_secondary_index {
-
-  # }
 }
