@@ -73,12 +73,6 @@ variable "ttl_attribute_name" {
   default     = ""
 }
 
-variable "tags" {
-  description = "(Optional) A map of tags to populate on the created table."
-  type        = map(string)
-  default     = null
-}
-
 variable "server_side_encryption_enabled" {
   description = "(Optional) Whether or not to enable encryption at rest using an AWS managed KMS customer master key (CMK)."
   type        = bool
@@ -93,36 +87,58 @@ variable "server_side_encryption_kms_key_arn" {
 
 variable "replicas" {
   description = "(Optional) AWS Regions where this table will be replicated."
-  type = list(object({
-    region_name            = string
-    kms_key_arn            = optional(string)
-    point_in_time_recovery = optional(string)
-    propagate_tags         = optional(string)
-  }))
+  type        = any
+  # Waiting for terraform to add support for optional object properties
+  # type = list(object({
+  #   region_name            = string
+  #   kms_key_arn            = (Optional) string
+  #   point_in_time_recovery = (Optional) bool
+  #   propagate_tags         = (Optional) bool
+  # }))
   default = []
 }
 
 variable "local_secondary_indexes" {
   description = "(Optional, Forces new resource) List of LSIs to create on the table."
-  type = list(object({
-    name               = string
-    range_key          = string
-    projection_type    = string
-    non_key_attributes = optional(string)
-  }))
+  type        = any
+  # Waiting for terraform to add support for optional object properties
+  # type = list(object({
+  #   name               = string
+  #   range_key          = string
+  #   projection_type    = string
+  #   non_key_attributes = (Optional) set(string)
+  # }))
   default = []
 }
 
 variable "global_secondary_indexes" {
   description = "(Optional) List of GSIs to create on the table."
-  type = list(object({
-    name               = string
-    hash_key           = string
-    projection_type    = string
-    range_key          = optional(string)
-    non_key_attributes = optional(string)
-    read_capacity      = optional(string)
-    write_capacity     = optional(string)
-  }))
+  type        = any
+  # Waiting for terraform to add support for optional object properties
+  # type = list(object({
+  #   name               = string
+  #   hash_key           = string
+  #   projection_type    = string
+  #   range_key          = (Optional) string
+  #   non_key_attributes = (Optional) set(string)
+  #   read_capacity      = (Optional) number
+  #   write_capacity     = (Optional) number
+  # }))
   default = []
+}
+
+variable "tags" {
+  description = "(Optional) A map of tags to populate on the created table."
+  type        = map(string)
+  default     = null
+}
+
+variable "timeouts" {
+  description = "Terraform resource management timeouts"
+  type        = map(string)
+  default = {
+    create = "30m"
+    update = "60m"
+    delete = "10m"
+  }
 }
