@@ -72,4 +72,10 @@ resource "aws_dynamodb_table" "this" {
   }
 
   tags = merge(var.tags, { Name = var.name })
+
+  timeouts {
+    create = lookup(var.timeouts, "create", null)
+    update = lookup(var.timeouts, "update", null)
+    delete = lookup(var.timeouts, "delete", null)
+  }
 }
