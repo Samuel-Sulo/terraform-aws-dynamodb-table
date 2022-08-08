@@ -92,12 +92,37 @@ variable "server_side_encryption_kms_key_arn" {
 }
 
 variable "replicas" {
-  description = "value"
+  description = "(Optional) AWS Regions where this table will be replicated."
   type = list(object({
     region_name            = string
     kms_key_arn            = optional(string)
     point_in_time_recovery = optional(string)
     propagate_tags         = optional(string)
+  }))
+  default = []
+}
+
+variable "local_secondary_indexes" {
+  description = "(Optional, Forces new resource) List of LSIs to create on the table."
+  type = list(object({
+    name               = string
+    range_key          = string
+    projection_type    = string
+    non_key_attributes = optional(string)
+  }))
+  default = []
+}
+
+variable "global_secondary_indexes" {
+  description = "(Optional) List of GSIs to create on the table."
+  type = list(object({
+    name               = string
+    hash_key           = string
+    projection_type    = string
+    range_key          = optional(string)
+    non_key_attributes = optional(string)
+    read_capacity      = optional(string)
+    write_capacity     = optional(string)
   }))
   default = []
 }
