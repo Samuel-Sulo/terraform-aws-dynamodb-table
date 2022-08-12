@@ -1,3 +1,9 @@
+variable "create_table" {
+  description = "(Optional) Wheter to create the table."
+  type        = bool
+  default     = true
+}
+
 variable "name" {
   description = "(Required) Name of the dynamodb table."
   type        = string
@@ -128,7 +134,7 @@ variable "global_secondary_indexes" {
 }
 
 variable "restore_date_time" {
-  description = "(Optional, Forces new resource) Time of the point-in-time recovery point to restore, conflicts with restore_to_latest_time. Must be in RFC3339 time format 2006-01-02T15:04:05Z07:00."
+  description = "(Optional, Forces new resource) Time of the point-in-time recovery point to restore, conflicts with `restore_to_latest_time`. Must be in RFC3339 time format 2006-01-02T15:04:05Z07:00."
   type        = string
   default     = null
 }
@@ -140,7 +146,7 @@ variable "restore_source_name" {
 }
 
 variable "restore_to_latest_time" {
-  description = "(Optional, Forces new resource) If set, restores table to the most recent point-in-time recovery point, conflicts with restore_date_time."
+  description = "(Optional, Forces new resource) If set, restores table to the most recent point-in-time recovery point, conflicts with `restore_date_time`."
   type        = bool
   default     = null
 }
@@ -159,4 +165,32 @@ variable "timeouts" {
     update = "60m"
     delete = "10m"
   }
+}
+
+variable "autoscaling_enabled" {
+  description = "(Optional) Wheter autoscaling is enabled."
+  type        = bool
+  default     = false
+}
+
+variable "autoscaling_default" {
+  description = "(Optional) Default autoscaling settings to apply to base table and indexes."
+  type        = map(number)
+  default = {
+    scale_in_cooldown  = 0
+    scale_out_cooldown = 0
+    target_value       = 70
+  }
+}
+
+variable "autoscaling_read" {
+  description = "(Optional) Autoscaling settings for RCUs on base table. The only required property is `max_capacity`."
+  type        = map(number)
+  default     = {}
+}
+
+variable "autoscaling_write" {
+  description = "(Optional) Autoscaling settings for WCUs on base table. The only required property is `max_capacity`."
+  type        = map(number)
+  default     = {}
 }
