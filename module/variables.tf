@@ -4,12 +4,12 @@ variable "name" {
 }
 
 variable "hash_key" {
-  description = "(Required, Forces new resource) Attribute to use as the hash (partition) key."
+  description = "(Required, Forces new resource) Attribute to use as the hash (partition) key. Must also be defined as an attribute."
   type        = string
 }
 
 variable "range_key" {
-  description = "(Optional, Forces new resource) Attribute to use as the range (sort) key."
+  description = "(Optional, Forces new resource) Attribute to use as the range (sort) key. Must also be defined as an attribute."
   type        = string
   default     = null
 }
@@ -20,19 +20,19 @@ variable "attributes" {
 }
 
 variable "billing_mode" {
-  description = "(Optional) Controls how you are charged for read and write throughput and how you manage capacity."
+  description = "(Optional) Controls how you are charged for read and write throughput and how you manage capacity. Valid values are PROVISIONED and PAY_PER_REQUEST."
   type        = string
-  default     = "PROVISIONED"
+  default     = "PAY_PER_REQUEST"
 }
 
 variable "read_capacity" {
-  description = "(Optional) Number of read units for this table."
+  description = "(Optional) Number of read units for this table. If the billing_mode is PROVISIONED, this field is required."
   type        = number
   default     = null
 }
 
 variable "write_capacity" {
-  description = "(Optional) Number of write units for this table."
+  description = "(Optional) Number of write units for this table. If the billing_mode is PROVISIONED, this field is required."
   type        = number
   default     = null
 }
@@ -44,13 +44,13 @@ variable "stream_enabled" {
 }
 
 variable "stream_view_type" {
-  description = "(Optional) When an item in the table is modified, StreamViewType determines what information is written to the table's stream."
+  description = "(Optional) When an item in the table is modified, determines what information is written to the table's stream. Valid values are KEYS_ONLY, NEW_IMAGE, OLD_IMAGE, NEW_AND_OLD_IMAGES."
   type        = string
   default     = null
 }
 
 variable "table_class" {
-  description = "(Optional) Storage class of the table."
+  description = "(Optional) Storage class of the table. Valid values are STANDARD and STANDARD_INFREQUENT_ACCESS."
   type        = string
   default     = "STANDARD"
 }
@@ -140,7 +140,7 @@ variable "restore_source_name" {
 }
 
 variable "restore_to_latest_time" {
-  description = "(Optional, Forces new resource) If set, restores table to the most recent point-in-time recovery point, conflicts with restore_date_time"
+  description = "(Optional, Forces new resource) If set, restores table to the most recent point-in-time recovery point, conflicts with restore_date_time."
   type        = bool
   default     = null
 }
@@ -152,7 +152,7 @@ variable "tags" {
 }
 
 variable "timeouts" {
-  description = "Terraform resource management timeouts"
+  description = "Terraform resource management timeouts."
   type        = map(string)
   default = {
     create = "30m"
