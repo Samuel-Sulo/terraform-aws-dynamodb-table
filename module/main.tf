@@ -1,16 +1,16 @@
 resource "aws_dynamodb_table" "this" {
-  name             = var.name
-  hash_key         = var.hash_key
-  range_key        = var.range_key
-  billing_mode     = var.billing_mode
-  read_capacity    = var.read_capacity
-  write_capacity   = var.write_capacity
-  stream_enabled   = var.stream_enabled
-  stream_view_type = var.stream_view_type
-  table_class      = var.table_class
-  # restore_date_time      = ""
-  # restore_source_name    = ""
-  # restore_to_latest_time = ""
+  name                   = var.name
+  hash_key               = var.hash_key
+  range_key              = var.range_key
+  billing_mode           = var.billing_mode
+  read_capacity          = var.read_capacity
+  write_capacity         = var.write_capacity
+  stream_enabled         = var.stream_enabled
+  stream_view_type       = var.stream_view_type
+  table_class            = var.table_class
+  restore_date_time      = var.restore_date_time
+  restore_source_name    = var.restore_source_name
+  restore_to_latest_time = var.restore_to_latest_time
 
   ttl {
     enabled        = var.ttl_enabled

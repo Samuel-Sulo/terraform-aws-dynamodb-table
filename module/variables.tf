@@ -127,6 +127,24 @@ variable "global_secondary_indexes" {
   default = []
 }
 
+variable "restore_date_time" {
+  description = "(Optional, Forces new resource) Time of the point-in-time recovery point to restore, conflicts with restore_to_latest_time. Must be in RFC3339 time format 2006-01-02T15:04:05Z07:00."
+  type        = string
+  default     = null
+}
+
+variable "restore_source_name" {
+  description = "(Optional, Forces new resource) Name of the table to restore. Must match the name of an existing table with PITR enabled."
+  type        = string
+  default     = null
+}
+
+variable "restore_to_latest_time" {
+  description = "(Optional, Forces new resource) If set, restores table to the most recent point-in-time recovery point, conflicts with restore_date_time"
+  type        = bool
+  default     = null
+}
+
 variable "tags" {
   description = "(Optional) A map of tags to populate on the created table."
   type        = map(string)
