@@ -183,14 +183,26 @@ variable "autoscaling_default" {
   }
 }
 
-variable "autoscaling_read" {
-  description = "(Optional) Autoscaling settings for RCUs on base table. The only required property is `max_capacity`."
+variable "autoscaling_table_read" {
+  description = "(Optional) Autoscaling settings for RCUs of base table. Required properties: `max_capacity` and `min_capacity`."
   type        = map(number)
   default     = {}
 }
 
-variable "autoscaling_write" {
-  description = "(Optional) Autoscaling settings for WCUs on base table. The only required property is `max_capacity`."
+variable "autoscaling_table_write" {
+  description = "(Optional) Autoscaling settings for WCUs of base table. Required properties: `max_capacity` and `min_capacity`."
   type        = map(number)
+  default     = {}
+}
+
+variable "autoscaling_indexes_read" {
+  description = "(Optional) Autoscaling settings for RCUs of indexes. Required properties: `max_capacity` and `min_capacity`."
+  type        = map(map(number))
+  default     = {}
+}
+
+variable "autoscaling_indexes_write" {
+  description = "(Optional) Autoscaling settings for WCUs of indexes. Required properties: `max_capacity` and `min_capacity`."
+  type        = map(map(number))
   default     = {}
 }
