@@ -168,7 +168,7 @@ variable "timeouts" {
 }
 
 variable "autoscaling_enabled" {
-  description = "(Optional) Wheter autoscaling is enabled."
+  description = "(Optional, Forces new resource) Wheter autoscaling is enabled."
   type        = bool
   default     = false
 }
