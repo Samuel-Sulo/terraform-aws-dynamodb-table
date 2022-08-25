@@ -3,7 +3,7 @@ provider "aws" {
 }
 
 module "user_pwd_exp_db" {
-  source = "../../module"
+  source = "../../"
 
   name               = "UserPwdExp"
   hash_key           = "userId"
