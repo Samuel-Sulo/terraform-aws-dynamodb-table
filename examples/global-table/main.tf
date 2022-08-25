@@ -3,7 +3,7 @@ provider "aws" {
 }
 
 module "config_db" {
-  source = "../../module"
+  source = "../../"
 
   name                           = "Configurations"
   hash_key                       = "PK"

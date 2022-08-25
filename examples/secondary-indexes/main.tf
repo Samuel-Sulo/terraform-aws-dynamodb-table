@@ -3,7 +3,7 @@ provider "aws" {
 }
 
 module "customers_db" {
-  source = "../../module"
+  source = "../../"
 
   name      = "Customers"
   hash_key  = "customerId"
